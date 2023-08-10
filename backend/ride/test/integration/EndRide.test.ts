@@ -71,7 +71,10 @@ test("Deve finalizar uma corrida", async function () {
     date: new Date("2021-03-01T10:40:00"),
   };
 
-  const endRide = new EndRide(new RideRepositoryDatabase(connection));
+  const endRide = new EndRide(
+    new RideRepositoryDatabase(connection),
+    new PassengerRepositoryDatabase(connection)
+  );
   await endRide.execute(inputEndtRide);
 
   const getRide = new GetRide(new RepositoryFactoryDatabase(connection));
