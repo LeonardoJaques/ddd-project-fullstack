@@ -1,0 +1,21 @@
+## create database
+✔ psql -h <hostname> -U <username> -d <database> @done (7/8/2023, 2:45:03 PM)
+
+## create owner and grant privileges to owner
+✔ psql -h <hostname> -U <username> -d <database> -c "CREATE ROLE <owner> WITH LOGIN PASSWORD '<password>'" @done (7/8/2023, 2:45:06 PM)
+
+## if you want change the owner of the database
+✔ psql -h <hostname> -U <username> -d <database> -c "ALTER DATABASE <database> OWNER TO <owner>" @done (7/8/2023, 2:45:07 PM)
+
+## grant privileges to owner
+✔ psql -h <hostname> -U <username> -d <database> -c "GRANT ALL PRIVILEGES ON DATABASE <database> TO <owner>" @done (7/8/2023, 2:45:08 PM)
+
+## create schema
+✔ psql -h <hostname> -U <username> -d <database> -c "CREATE SCHEMA <schema> AUTHORIZATION <owner>" @done (7/8/2023, 2:45:09 PM)
+## you can revoke privileges from owner
+✔ REVOKE ALL PRIVILEGES ON DATABASE app FROM current_owner; @done (7/8/2023, 2:46:04 PM)
+
+-- commands
+sudo service postgresql status
+sudo service postgresql start
+sudo service postgresql stop

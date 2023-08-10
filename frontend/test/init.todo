@@ -1,0 +1,54 @@
+✔ yarn create vite @done (7/28/2023, 1:47:17 PM)
+✔ yarn add @vue/test-utils happy-dom vitest @done (7/28/2023, 1:47:18 PM)
+✔ seting up tsconfig.json @done (7/28/2023, 1:47:19 PM)
+```
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmit": true,
+    "jsx": "preserve",
+    "allowJs": true,
+    "types": ["vitest/globals"],
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "test"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+```
+
+✔ /// <reference types="vitest"/> @done (7/28/2023, 2:15:25 PM)
+
+```
+/// <reference types="vitest"/>
+import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "vite";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  test: {
+    globals: true,
+  },
+});
+```
