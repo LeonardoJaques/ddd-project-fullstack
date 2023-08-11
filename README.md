@@ -1,14 +1,14 @@
-# Domain-Driven Design (DDD)
+## Domain-Driven Design (DDD)
 
-# Testes-Driven Design (TDD)
+## Testes-Driven Design (TDD)
 
-# SOLID
+## SOLID
 
-# VueJS
+## VueJS
 
-# Clean Code
+## Clean Code
 
-# Clean Architecture
+## Clean Architecture
 
 O projeto em foco incorpora práticas de Domain-Driven Design (DDD) tanto no
 desenvolvimento backend quanto no frontend, enquanto também implementa testes
