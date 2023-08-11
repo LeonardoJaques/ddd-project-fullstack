@@ -1,12 +1,11 @@
 import AcceptRide from "../../src/application/usecase/AcceptRide";
-import CreateDriver from "../../src/application/usecase/CreateDriver";
-import CreatePassenger from "../../src/application/usecase/CreatePassenger";
 import GetRide from "../../src/application/usecase/GetRide";
 import RequestRide from "../../src/application/usecase/RequestRide";
 import StartRide from "../../src/application/usecase/StartRide";
 import RepositoryFactoryDatabase from "../../src/infra/factory/RepositoryFactoryDatabase";
-import DriverRepositoryDatabase from "../../src/infra/repository/DriverRepositoryDatabase";
-import PassengerRepositoryDatabase from "../../src/infra/repository/PassengerRepositoryDatabase";
+import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttp";
+import AxiosAdapter from "../../src/infra/http/AxiosAdapter";
+
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 import PgPromiseAdapter from "../../src/infra/repository/database/PgPromiseAdapter";
 
@@ -16,11 +15,10 @@ test("Deve iniciar uma corrida", async function () {
     email: "john.doe@gmail.com",
     document: "83432616074",
   };
+  const accountGateway = new AccountGatewayHttp(new AxiosAdapter());
   const connection = new PgPromiseAdapter();
-  const createPassenger = new CreatePassenger(
-    new PassengerRepositoryDatabase(connection)
-  );
-  const outputCreatePassenger = await createPassenger.execute(
+
+  const outputCreatePassenger = await accountGateway.createPassenger(
     inputCreatePassenger
   );
   const inputRequestRide = {
@@ -42,10 +40,10 @@ test("Deve iniciar uma corrida", async function () {
     document: "87175659520",
     carPlate: "ABC1234",
   };
-  const createDriver = new CreateDriver(
-    new DriverRepositoryDatabase(connection)
+
+  const outputCreateDriver = await accountGateway.createDriver(
+    inputCreateDriver
   );
-  const outputCreateDriver = await createDriver.execute(inputCreateDriver);
   const requestRide = new RequestRide(new RideRepositoryDatabase(connection));
   const outputRequestRide = await requestRide.execute(inputRequestRide);
 

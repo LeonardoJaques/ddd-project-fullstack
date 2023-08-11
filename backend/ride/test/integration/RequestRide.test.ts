@@ -1,23 +1,20 @@
-import CreatePassenger from "../../src/application/usecase/CreatePassenger";
 import GetRide from "../../src/application/usecase/GetRide";
 import RequestRide from "../../src/application/usecase/RequestRide";
 import RepositoryFactoryDatabase from "../../src/infra/factory/RepositoryFactoryDatabase";
-import PassengerRepositoryDatabase from "../../src/infra/repository/PassengerRepositoryDatabase";
+import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttp";
+import AxiosAdapter from "../../src/infra/http/AxiosAdapter";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 import PgPromiseAdapter from "../../src/infra/repository/database/PgPromiseAdapter";
 
 test("Deve solicitar uma corrida", async () => {
   const connection = new PgPromiseAdapter();
+  const accountGateway = new AccountGatewayHttp(new AxiosAdapter());
   const inputCreatePassenger = {
     name: "Jonh Doe",
     email: "john.doe@outlook.com",
     document: "87175659520",
   };
-  const createPassenger = new CreatePassenger(
-    new PassengerRepositoryDatabase(connection)
-  );
-
-  const outputCreatePassenger = await createPassenger.execute(
+  const outputCreatePassenger = await accountGateway.createPassenger(
     inputCreatePassenger
   );
   const inputRequestRide = {
@@ -44,11 +41,8 @@ test("Deve obter uma corrida", async () => {
     email: "john.doe@outlook.com",
     document: "87175659520",
   };
-  const createPassenger = new CreatePassenger(
-    new PassengerRepositoryDatabase(connection)
-  );
-
-  const outputCreatePassenger = await createPassenger.execute(
+  const accountGateway = new AccountGatewayHttp(new AxiosAdapter());
+  const outputCreatePassenger = await accountGateway.createPassenger(
     inputCreatePassenger
   );
   const inputRequestRide = {

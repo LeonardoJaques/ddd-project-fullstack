@@ -1,24 +1,26 @@
+import AccountGatewayHttp from "../../infra/gateway/AccountGatewayHttp";
+import AxiosAdapter from "../../infra/http/AxiosAdapter";
 import RepositoryFactory from "../factory/RepositoryFactory";
-import DriverRepository from "../repository/DriverRepository";
-import PassengerRepository from "../repository/PassengerRepository";
+import AccountGateway from "../gateway/AccountGateway";
 import RideRepository from "../repository/RideRepository";
 
 export default class GetRide {
   rideRepository: RideRepository;
-  passengerRepository: PassengerRepository;
-  driverRepository: DriverRepository;
 
-  constructor(readonly repository: RepositoryFactory) {
+  constructor(
+    readonly repository: RepositoryFactory,
+    readonly accountGateway: AccountGateway = new AccountGatewayHttp(
+      new AxiosAdapter()
+    )
+  ) {
     this.rideRepository = repository.createRideRepository();
-    this.passengerRepository = repository.createPassengerRepository();
-    this.driverRepository = repository.createDriverRepository();
   }
   async execute(input: Input): Promise<Output> {
     const ride = await this.rideRepository.get(input.rideId);
-    const passenger = await this.passengerRepository.get(ride.passengerId);
+    const passenger = await this.accountGateway.getPassenger(ride.passengerId);
     let driver;
     if (ride.driverId) {
-      driver = await this.driverRepository.get(ride.driverId);
+      driver = await this.accountGateway.getDriver(ride.driverId);
     }
     return {
       rideId: ride.rideId,
