@@ -10,7 +10,8 @@ export default class UsecaseFactory {
 
   createCreatePassenger() {
     return new CreatePassenger(
-      this.repositoryFactory.createPassengerRepository()
+      this.repositoryFactory.createPassengerRepository(),
+      this.repositoryFactory.createUserRepository()
     );
   }
 
@@ -19,7 +20,10 @@ export default class UsecaseFactory {
   }
 
   createGetPassenger() {
-    return new GetPassenger(this.repositoryFactory.createPassengerRepository());
+    return new GetPassenger(
+      this.repositoryFactory.createPassengerRepository(),
+      this.repositoryFactory.createUserRepository()
+    );
   }
 
   createGetDriver() {

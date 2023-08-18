@@ -29,6 +29,7 @@ test("Deve obter o passageiro", async function () {
     name: "Jonh Doe",
     email: "john.doe@outlook.com",
     document: "87175659520",
+    password: "123456",
   };
   const response1 = await axios.post(
     "http://localhost:3002/passengers/",

@@ -1,6 +1,7 @@
 import CreatePassenger from "../../src/application/usecase/CreatePassenger";
 import GetPassenger from "../../src/application/usecase/GetPassenger";
 import PassengerRepositoryDatabase from "../../src/infra/repository/PassengerRepositoryDatabase";
+import UserRepositoryDatabase from "../../src/infra/repository/UserRepositoryDatabase";
 import PgPromiseAdapter from "../../src/infra/repository/database/PgPromiseAdapter";
 
 test("Deve cadastrar o passageiro", async function () {
@@ -9,9 +10,11 @@ test("Deve cadastrar o passageiro", async function () {
     name: "Jonh Doe",
     email: "john.doe@outlook.com",
     document: "87175659520",
+    password: "123456",
   };
   const usecase = new CreatePassenger(
-    new PassengerRepositoryDatabase(connection)
+    new PassengerRepositoryDatabase(connection),
+    new UserRepositoryDatabase(connection)
   );
   const output = await usecase.execute(input);
   expect(output.passengerId).toBeDefined();
@@ -24,9 +27,11 @@ test("Não deve cadastrar o passageiro email inválido", async function () {
     name: "Jonh Doe",
     email: "john.doe@outlook",
     document: "87175659520",
+    password: "123456",
   };
   const usecase = new CreatePassenger(
-    new PassengerRepositoryDatabase(connection)
+    new PassengerRepositoryDatabase(connection),
+    new UserRepositoryDatabase(connection)
   );
   expect(async () => await usecase.execute(input)).rejects.toThrowError(
     "Invalid email"
@@ -40,13 +45,16 @@ test("Deve obter o passageiro", async function () {
     name: "Jonh Doe",
     email: "john.doe@outlook.com",
     document: "87175659520",
+    password: "123456",
   };
   const usecase1 = new CreatePassenger(
-    new PassengerRepositoryDatabase(connection)
+    new PassengerRepositoryDatabase(connection),
+    new UserRepositoryDatabase(connection)
   );
   const output1 = await usecase1.execute(input);
   const usecase2 = new GetPassenger(
-    new PassengerRepositoryDatabase(connection)
+    new PassengerRepositoryDatabase(connection),
+    new UserRepositoryDatabase(connection)
   );
   const output2 = await usecase2.execute({ passengerId: output1.passengerId });
   expect(output2.name).toBe(input.name);
