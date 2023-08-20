@@ -15,6 +15,7 @@ test("Deve processar um pagamento", async () => {
   const responseTransaction = await axios.get(
     `http://localhost:3001/transactions/${processPaymentOutput.transactionId}`
   );
+
   const getTransactionOutput = responseTransaction.data;
   expect(getTransactionOutput.name).toBe(input.name);
 });

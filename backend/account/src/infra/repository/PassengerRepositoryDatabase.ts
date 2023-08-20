@@ -23,7 +23,6 @@ export default class PassengerRepositoryDatabase
       "select * from cccat12.passenger where passenger_id = $1",
       [passengerId]
     );
-    console.log("passengerData", passengerData);
     return new Passenger(
       passengerData.passenger_id,
       passengerData.name,

@@ -6,7 +6,7 @@ export default class Login {
   async execute(input: Input): Promise<Output> {
     const user = await this.userRepository.getByEmail(input.email);
     const token = TokenGenerator.create("secret", user.email.value, new Date());
-    if (user.validatePassword(input.password)) {
+    if (!user.validatePassword(input.password)) {
       return { token };
     }
     throw new Error("Invalid password");

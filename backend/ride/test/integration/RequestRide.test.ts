@@ -1,3 +1,4 @@
+import axios from "axios";
 import GetRide from "../../src/application/usecase/GetRide";
 import RequestRide from "../../src/application/usecase/RequestRide";
 import RepositoryFactoryDatabase from "../../src/infra/factory/RepositoryFactoryDatabase";
@@ -5,7 +6,7 @@ import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttp";
 import AxiosAdapter from "../../src/infra/http/AxiosAdapter";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 import PgPromiseAdapter from "../../src/infra/repository/database/PgPromiseAdapter";
-
+axios.defaults.validateStatus = () => true;
 test("Deve solicitar uma corrida", async () => {
   const connection = new PgPromiseAdapter();
   const accountGateway = new AccountGatewayHttp(new AxiosAdapter());

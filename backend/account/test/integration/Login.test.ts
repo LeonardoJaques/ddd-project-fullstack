@@ -30,8 +30,8 @@ test("Deve fazer o login", async () => {
 });
 test("Deve fazer o login e validar se o usuraio esta logado", async () => {
   const input = {
-    name: "Jonh Doe",
     email: "john.doe@outlook.com",
+    name: "Jonh Doe",
     document: "87175659520",
     password: "12345",
   };

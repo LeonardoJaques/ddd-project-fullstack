@@ -26,8 +26,8 @@ export default class TransactionRepositoryDatabase
     console.log("transactionData", transactionData);
     return new Transaction(
       transactionData.transaction_id,
-      transactionData.email,
       transactionData.name,
+      transactionData.email,
       transactionData.amount
     );
   }
