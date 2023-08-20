@@ -7,6 +7,7 @@ export type Input = {
   email: string;
   amount: number;
 };
+
 export type Output = {
   transactionId: string;
 };

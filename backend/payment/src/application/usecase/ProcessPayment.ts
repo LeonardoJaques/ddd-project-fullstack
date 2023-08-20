@@ -7,16 +7,19 @@ export default class ProcessPayment {
     readonly transactionRepository: TransactionRepository,
     readonly paymentGateway: PaymentGateway
   ) {}
+
   async execute(input: Input): Promise<Output> {
-    const outputPaymentgateway = await this.paymentGateway.createTransaction(
+    const outputPaymentGateway = await this.paymentGateway.createTransaction(
       input
     );
+
     const transaction = new Transaction(
-      outputPaymentgateway.transactionId,
-      input.amount,
+      outputPaymentGateway.transactionId,
       input.name,
-      input.email
+      input.email,
+      input.amount
     );
+
     await this.transactionRepository.save(transaction);
     return {
       transactionId: transaction.transactionId,

@@ -9,7 +9,7 @@ export default class TransactionRepositoryDatabase
 
   async save(transaction: Transaction): Promise<void> {
     await this.connection.query(
-      "insert into cccat12.transaction (transaction_id, name, email, amount) values ($1, $2, $3, $4)",
+      "insert into cccat12.transactions (transaction_id, name, email, amount) values ($1, $2, $3, $4)",
       [
         transaction.transactionId,
         transaction.name,
@@ -20,9 +20,10 @@ export default class TransactionRepositoryDatabase
   }
   async get(transactionId: String): Promise<Transaction> {
     const [transactionData] = await this.connection.query(
-      "select * from cccat12.transaction where transaction_id = $1",
+      "select * from cccat12.transactions where transaction_id = $1",
       [transactionId]
     );
+    console.log("transactionData", transactionData);
     return new Transaction(
       transactionData.transaction_id,
       transactionData.email,

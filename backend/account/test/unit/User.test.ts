@@ -6,11 +6,18 @@ test("Deve criar um novo usuário com senha plain", () => {
   expect(user.email.value).toBe("John.doe@gmail.com");
   expect(user.password.value).toBe("123456");
 });
-test("Deve restaurar um usuário existente", () => {
+test("Deve restaurar um usuário existente", function () {
   const userId = UUIDGenerator.create();
-  const user = User.restore(userId, "John.doe@gmail.com", "123456", "plain");
+  // const salt = "75b9a6dc2e43a8cdb76f34b2c32bcd8c31e5d3f1";
+  const user = User.restore(
+    userId,
+    "john.doe@pitlook.com",
+    "123456",
+    "",
+    "plain"
+  );
   expect(user.userId).toBe(userId);
-  expect(user.email.value).toBe("John.doe@gmail.com");
+  expect(user.email.value).toBe("john.doe@pitlook.com");
   expect(user.password.value).toBe("123456");
 });
 test("Deve criar um novo usuário com senha encripitada", () => {
@@ -21,7 +28,13 @@ test("Deve criar um novo usuário com senha encripitada", () => {
 });
 test("Deve validar um usuário existente com senha plain", function () {
   const userId = UUIDGenerator.create();
-  const user = User.restore(userId, "john.doe@gmail.com", "123456", "plain");
+  const user = User.restore(
+    userId,
+    "john.doe@gmail.com",
+    "123456",
+    "",
+    "plain"
+  );
   expect(user.validatePassword("123456")).toBe(true);
 });
 test("Deve validar um usuário existente com senha encriptada", function () {
@@ -30,6 +43,7 @@ test("Deve validar um usuário existente com senha encriptada", function () {
     userId,
     "john.doe@gmail.com",
     "7c4a8d09ca3762af61e59520943dc26494f8941b",
+    "",
     "sha1"
   );
   expect(user.validatePassword("123456")).toBe(true);
@@ -49,8 +63,8 @@ test("Deve validar um existente usuário com senha encripitada com pbkdf2", () =
     userId,
     "john.doe@gmail.com",
     password,
-    "pbkdf2",
-    salt
+    salt,
+    "pbkdf2"
   );
   expect(user.validatePassword("123456")).toBe(true);
 });

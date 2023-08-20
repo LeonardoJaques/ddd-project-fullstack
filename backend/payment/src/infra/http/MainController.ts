@@ -10,7 +10,6 @@ export default class MainController {
   getTransaction?: GetTransaction;
 
   constructor(httpServer: HttpServer) {
-    //driver, primary actor, inbound adapter
     httpServer.on(
       "post",
       "/process_payment",
@@ -19,9 +18,10 @@ export default class MainController {
         return output;
       }
     );
+
     httpServer.on(
       "get",
-      "/transactions/:{transactionId}}",
+      "/transactions/:{transactionId}",
       async (params: any, body: any) => {
         const output = await this.getTransaction?.execute({
           transactionId: params.transactionId,

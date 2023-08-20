@@ -32,7 +32,7 @@ create table cccat12.ride (
   price numeric
 );
 
-create table cccat12.transaction (
+create table cccat12.transactions (
   transaction_id uuid primary key,
   name text,
   email text,

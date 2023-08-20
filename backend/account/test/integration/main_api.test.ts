@@ -11,6 +11,14 @@ test("Deve cadastrar o passageiro", async function () {
   const output = response.data;
   expect(output.passengerId).toBeDefined();
 });
+test("Deve cadastrar o passageiro async", async function () {
+  const input = {
+    name: "Jonh Doe",
+    email: "john.doe@outlook.com",
+    document: "87175659520",
+  };
+  await axios.post("http://localhost:3002/passengersAsync", input);
+});
 
 test("Não deve cadastrar o passageiro com cpf inválido", async function () {
   const input = {

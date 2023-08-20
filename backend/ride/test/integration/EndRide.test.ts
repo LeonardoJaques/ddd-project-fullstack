@@ -1,3 +1,4 @@
+import axios from "axios";
 import AcceptRide from "../../src/application/usecase/AcceptRide";
 import EndRide from "../../src/application/usecase/EndRide";
 import GetRide from "../../src/application/usecase/GetRide";
@@ -5,10 +6,12 @@ import RequestRide from "../../src/application/usecase/RequestRide";
 import StartRide from "../../src/application/usecase/StartRide";
 import RepositoryFactoryDatabase from "../../src/infra/factory/RepositoryFactoryDatabase";
 import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttp";
+import PaymentGatewayHttp from "../../src/infra/gateway/PaymentGatewayHttp";
 import AxiosAdapter from "../../src/infra/http/AxiosAdapter";
+import RabbitMqAdapter from "../../src/infra/queue/RabbitMqAdapter";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 import PgPromiseAdapter from "../../src/infra/repository/database/PgPromiseAdapter";
-
+axios.defaults.validateStatus = () => true;
 test("Deve finalizar uma corrida", async function () {
   const inputCreatePassenger = {
     name: "John Doe",
@@ -61,15 +64,20 @@ test("Deve finalizar uma corrida", async function () {
 
   const startRide = new StartRide(new RideRepositoryDatabase(connection));
   await startRide.execute(inputStartRide);
-
   const inputEndtRide = {
     rideId: outputRequestRide.rideId,
     date: new Date("2021-03-01T10:40:00"),
   };
+  const queue = new RabbitMqAdapter();
+  await queue.connect();
+  const endRide = new EndRide(
+    new RideRepositoryDatabase(connection),
+    new AccountGatewayHttp(new AxiosAdapter()),
+    new PaymentGatewayHttp(new AxiosAdapter()),
+    queue
+  );
 
-  const endRide = new EndRide(new RideRepositoryDatabase(connection));
   await endRide.execute(inputEndtRide);
-
   const getRide = new GetRide(new RepositoryFactoryDatabase(connection));
   const outputGetRide = await getRide.execute({
     rideId: outputRequestRide.rideId,
