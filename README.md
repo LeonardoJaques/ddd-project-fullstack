@@ -9,7 +9,7 @@
 ## DDD (Domain-Driven Design): 
   * Abordagem para desenvolver software baseada na compreensão profunda do domínio do problema.
 
-## EDD (Event-Driven Design): 
+## EDA (Event-Driven Architecture): 
   * Paradigma que modela a comunicação entre sistemas por meio de eventos assíncronos.
 
 ## Princípios SOLID: 
@@ -27,7 +27,7 @@
 ##
 *Postgress*: Sistema de gerenciamento de banco de dados confiável e escalável, adequado para projetos complexos.
 ##
-*RebbitMQ*: Middleware de mensageria essencial para sistemas distribuídos, otimizando a comunicação entre componentes.
+*RabbitMQ*: Middleware de mensageria essencial para sistemas distribuídos, otimizando a comunicação entre componentes.
 ##
 
 # O projeto.
